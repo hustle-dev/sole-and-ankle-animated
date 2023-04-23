@@ -1,16 +1,16 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from 'react'
+import styled from 'styled-components/macro'
 
-import { QUERIES, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import Icon from '../Icon';
-import UnstyledButton from '../UnstyledButton';
-import SuperHeader from '../SuperHeader';
-import MobileMenu from '../MobileMenu';
-import VisuallyHidden from '../VisuallyHidden';
+import { QUERIES, WEIGHTS } from '../../constants'
+import Logo from '../Logo'
+import Icon from '../Icon'
+import UnstyledButton from '../UnstyledButton'
+import SuperHeader from '../SuperHeader'
+import MobileMenu from '../MobileMenu'
+import VisuallyHidden from '../VisuallyHidden'
 
 const Header = () => {
-  const [showMobileMenu, setShowMobileMenu] = React.useState(false);
+  const [showMobileMenu, setShowMobileMenu] = React.useState(false)
 
   return (
     <header>
@@ -20,12 +20,24 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <NavLink href="/sale">
+            <NavSpan data-hover="Sale">Sale</NavSpan>
+          </NavLink>
+          <NavLink href="/new" data-hover="New Releases">
+            <NavSpan data-hover="New Releases">New Releases</NavSpan>
+          </NavLink>
+          <NavLink href="/men" data-hover="Men">
+            <NavSpan data-hover="Men">Men</NavSpan>
+          </NavLink>
+          <NavLink href="/women" data-hover="Women">
+            <NavSpan data-hover="Women">Women</NavSpan>
+          </NavLink>
+          <NavLink href="/kids" data-hover="Kids">
+            <NavSpan data-hover="Kids">Kids</NavSpan>
+          </NavLink>
+          <NavLink href="/collections" data-hover="Collections">
+            <NavSpan data-hover="Collections">Collections</NavSpan>
+          </NavLink>
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -44,13 +56,10 @@ const Header = () => {
         <Filler />
       </MainHeader>
 
-      <MobileMenu
-        isOpen={showMobileMenu}
-        onDismiss={() => setShowMobileMenu(false)}
-      />
+      <MobileMenu isOpen={showMobileMenu} onDismiss={() => setShowMobileMenu(false)} />
     </header>
-  );
-};
+  )
+}
 
 const MainHeader = styled.div`
   display: flex;
@@ -69,7 +78,7 @@ const MainHeader = styled.div`
     padding-left: 16px;
     padding-right: 16px;
   }
-`;
+`
 
 const DesktopNav = styled.nav`
   display: flex;
@@ -79,7 +88,7 @@ const DesktopNav = styled.nav`
   @media ${QUERIES.tabletAndSmaller} {
     display: none;
   }
-`;
+`
 
 const MobileActions = styled.div`
   display: none;
@@ -92,7 +101,7 @@ const MobileActions = styled.div`
   @media ${QUERIES.phoneAndSmaller} {
     gap: 16px;
   }
-`;
+`
 
 const LogoWrapper = styled.div`
   flex: 1;
@@ -100,11 +109,11 @@ const LogoWrapper = styled.div`
   @media ${QUERIES.tabletAndSmaller} {
     flex: revert;
   }
-`;
+`
 
 const ShoppingBagButton = styled(UnstyledButton)`
   transform: translateX(-2px);
-`;
+`
 
 const Filler = styled.div`
   flex: 1;
@@ -112,9 +121,11 @@ const Filler = styled.div`
   @media ${QUERIES.tabletAndSmaller} {
     display: none;
   }
-`;
+`
 
 const NavLink = styled.a`
+  overflow: hidden;
+
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
@@ -124,6 +135,26 @@ const NavLink = styled.a`
   &:first-of-type {
     color: var(--color-secondary);
   }
-`;
+`
 
-export default Header;
+const NavSpan = styled.span`
+  display: inline-block;
+  position: relative;
+
+  transition: transform 300ms;
+
+  &::before {
+    position: absolute;
+    top: 100%;
+    font-weight: bold;
+    content: attr(data-hover);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &:hover {
+      transform: translateY(-100%);
+    }
+  }
+`
+
+export default Header
